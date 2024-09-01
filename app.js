@@ -6,7 +6,7 @@ if (window.location.hostname.includes("--")) {
 }
 document.getElementById(
   "scraper-link"
-).href = `https://github.com/nikhilmwarrier/jee-2024-scraper/blob/${branch}/scraper.js`;
+).href = `https://github.com/Samarth2615/JEE-Mains-Result-/blob/main/scraper.js`;
 
 const mainForm = document.getElementById("main-form");
 mainForm.addEventListener("submit", async e => {
