@@ -4,37 +4,6 @@ By sudo-Mystic (u/Mystic1869)
 Works but need logic to handle exceptions
 */
 
-// Function to extract and simplify exam date
-function extractAndSimplifyExamDate(pageNumber) {
-    const examDateXPath = `/html/body/div[1]/div[2]/div[8]/div[2]/div[${pageNumber}]/div[4]/span[2]`;
-    const examDateElement = document.evaluate(examDateXPath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-    if (examDateElement) {
-        const examDateText = examDateElement.textContent.trim();
-        const match = examDateText.match(/(\d{2})\.(\d{2})\.(\d{4})/);
-
-        if (match) {
-            const simplifiedDate = match.slice(1).join('');
-            return simplifiedDate;
-        }
-    }
-
-    return null;
-}
-
-// Function to extract shift information
-function extractShift(pageNumber) {
-    const shiftXPath = `/html/body/div[1]/div[2]/div[8]/div[2]/div[${pageNumber}]/div[4]/span[8]`;
-    const shiftElement = document.evaluate(shiftXPath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-    if (shiftElement) {
-        const shiftText = shiftElement.textContent.trim();
-        return shiftText.includes('First') ? '1' : (shiftText.includes('Second') ? '2' : null);
-    }
-
-    return null;
-}
-
 // Function to extract subject data
 function extractSubjectData(subjectXPath, initialX, pageNumber) {
     const subjectData = [];
@@ -77,10 +46,7 @@ function outputAllDataInJSON() {
         { xpath: `/html/body/div[1]/div[2]/div[8]/div[2]/div[${pageNumber}]/div[4]/span[108]`, initialX: 111 },
         { xpath: `/html/body/div[1]/div[2]/div[8]/div[2]/div[${pageNumber}]/div[4]/span[201]`, initialX: 204 },
     ];
-
-    const simplifiedExamDate = extractAndSimplifyExamDate(pageNumber);
-    const shift = extractShift(pageNumber);
-
+    
     const pageData = subjects.map(subject => {
         const subjectNameElement = document.evaluate(subject.xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
         const subjectName = subjectNameElement ? subjectNameElement.textContent.trim() : null;
