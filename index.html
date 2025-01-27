@@ -1,455 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
-    />
-    <title>JEE Scorecard Generator</title>
-    <script
-      data-goatcounter="https://nikhilmwarrier.goatcounter.com/count"
-      async
-      src="//gc.zgo.at/count.js"
-    ></script>
-    <script defer src="./modal.js"></script>
-    <script defer type="module" src="./app.js"></script>
-    <style>
-      html,
-      body {
-        height: 100%;
-        width: 100%;
-      }
-      li {
-        margin-top: 2rem;
-      }
-      textarea,
-      select {
-        margin-top: 1rem;
-      }
-      dialog article {
-        width: 80ch;
-      }
-      .shift span,
-      .score span {
-        font-weight: bold;
-      }
-      .disclaimer {
-        border: var(--border-width) solid var(--accordion-border-color);
-        padding: 1.5rem;
-      }
-      .disclaimer h2 {
-        font-size: 1.3rem;
-        margin-bottom: 1rem;
-      }
-    </style>
-  </head>
-  <body>
-    <main class="container">
-      <h1>JEE Scorecard Generator</h1>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>JEE Marks Calculator</title>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <main>
+    <h1>JEE Mains Marks Calculator</h1>
+    <p>Upload your response sheet (HTML or PDF) and select the appropriate shift to calculate your score.</p>
+    
+    <section>
+      <form id="upload-form">
+        <label for="shift">Select Shift:</label>
+        <select id="shift" name="shift" required>
+          <option value="shift1">Shift 1</option>
+          <option value="shift2">Shift 2</option>
+          <!-- Add more shifts as needed -->
+        </select>
 
-      <div class="main-container">
-        <details>
-          <summary>Generate using NTA site</summary>
+        <label for="responseFile">Upload Response Sheet:</label>
+        <input type="file" id="responseFile" accept=".html,.pdf" required>
+        
+        <button type="submit">Calculate Score</button>
+      </form>
+    </section>
 
-          <article>
-            <form id="main-form">
-              <ul>
-                <li>
-                  <strong>Step 1:</strong> Select your shift
-                  <select id="shift" name="shift" required>
-                    <optgroup label="Session 1">
-                      <option value="27s1">
-                        27 Jan 2024 Shift 1 (thx u/Different-Cycle9710)
-                      </option>
-                      <option value="27s2">
-                        27 Jan 2024 Shift 2 (by yours truly)
-                      </option>
-
-                      <option value="29s1">
-                        29 Jan 2024 Shift 1 (thx u/Aditya_Noob99)
-                      </option>
-
-                      <option value="29s2">
-                        29 Jan 2024 Shift 2 (thx u/Get_mortdogged)
-                      </option>
-
-                      <option value="30s1">
-                        30 Jan 2024 Shift 1
-                        <em>(thx u/IamStonedRick)</em>
-                      </option>
-
-                      <option value="30s2">
-                        30 Jan 2024 Shift 2
-                        <em>(thx u/mimusops)</em>
-                      </option>
-
-                      <option value="31s2">
-                        31 Jan 2024 Shift 2
-                        <em>(thx u/Devansh9201)</em>
-                      </option>
-
-                      <option value="01s2">
-                        01 Feb 2024 Shift 2 (thx u/lol12145)
-                      </option>
-                    </optgroup>
-                    <optgroup label="Session 2 (NTA's official keys)">
-                      <option value="04s1">04 April 2024 Shift 1</option>
-                      <option value="04s2">04 April 2024 Shift 2</option>
-                      <option value="05s1">05 April 2024 Shift 1</option>
-                      <option value="05s2">05 April 2024 Shift 2</option>
-                      <option value="06s1">06 April 2024 Shift 1</option>
-                      <option value="06s2">06 April 2024 Shift 2</option>
-                      <option value="08s1">08 April 2024 Shift 1</option>
-                      <option value="08s2">08 April 2024 Shift 2</option>
-                      <option value="09s1">09 April 2024 Shift 1</option>
-                      <option value="09s2">09 April 2024 Shift 2</option>
-                    </optgroup>
-                  </select>
-                </li>
-                <li>
-                  <strong>Step 2:</strong>
-                  <ul>
-                    <li>
-                      Copy this script
-                      <br /><br />
-                      <button
-                        class="secondary"
-                        onclick="copyScript()"
-                        type="button"
-                      >
-                        Copy script
-                      </button>
-                      <a
-                        id="scraper-link"
-                        href="https://github.com/Samarth2615/JEE-Mains-Result-/blob/main/scraper.js"
-                      >
-                        (Copy from this page if the button is not working)
-                      </a>
-                    </li>
-                    <li>
-                      Open your response sheet page (The NTA site,
-                      <strong>NOT</strong> the pdf)
-                    </li>
-                    <li>Open Developer Tools (Right-click > Inspect)</li>
-                    <li>Go to the Console tab</li>
-                    <li>
-                      Paste and hit enter (If you see a warning, type
-                      <code>allow pasting</code> and hit enter first, and then
-                      paste the script)
-                    </li>
-                    <li>
-                      Copy the output
-                      <br />
-                      (Firefox: Right-click > Copy Object)
-                      <br />
-                      (Chrome etc: Hover over the output and click on "Copy")
-                    </li>
-                  </ul>
-                  <br />
-
-                  <br />
-                  <textarea
-                    id="scriptarea"
-                    style="
-                      opacity: 0;
-                      height: 0;
-                      width: 0;
-                      position: fixed;
-                      bottom: 0;
-                    "
-                    cols="1"
-                    rows="1"
-                  >
-const tables = document.querySelectorAll(".menu-tbl");
-const data = {};
-
-tables.forEach((table, i) => {
-const qnType = table.querySelectorAll("tr td.bold")[0].innerText.trim(); // "MCQ || "SA"
-const qnID = table.querySelectorAll("tr td.bold")[1].innerText.trim();
-
-if (qnType === "MCQ") {
-let hasAnswered = false;
-const status2 = table
-.querySelectorAll("tr td.bold")[7]
-.innerText.trim();
-
-if (status2 !== "--") {
-hasAnswered = true;
-}
-
-if (hasAnswered) {
-let options = [0, 0, 0, 0];
-for (let j = 0; j < 4; j++) {
-    options[j] = Number(
-        table.querySelectorAll("tr td.bold")[2 + j].innerText
-    );
-}
-
-const ownAnswerIndex =
-    Number(
-        table.querySelectorAll("tr td.bold")[7].innerText.trim()
-    ) - 1;
-const ownAnswer = options[ownAnswerIndex];
-
-data[qnID] = {
-    qnType,
-    hasAnswered,
-    options,
-    ownAnswer,
-};
-} else {
-data[qnID] = { qnType, hasAnswered };
-}
-} else if (qnType === "SA") {
-let hasAnswered = false;
-const ownAnswer = document
-.querySelectorAll(".questionRowTbl")
-[i].querySelector("tr:nth-of-type(5) td.bold").innerText;
-
-if (ownAnswer !== "--") {
-hasAnswered = true;
-}
-
-if (hasAnswered) {
-data[qnID] = {
-    qnType,
-    hasAnswered,
-    ownAnswer,
-};
-} else {
-data[qnID] = { qnType, hasAnswered };
-}
-}
-});
-
-const generatedJSON = JSON.stringify(data, null, 2);
-console.log(generatedJSON);</textarea
-                  >
-                </li>
-                <li>
-                  <strong>Step 3:</strong> Paste the output from the script
-                  here:
-                  <br />
-                  <textarea
-                    required
-                    name="responses"
-                    id="responses"
-                    Submit
-                    cols="80"
-                    rows="10"
-                    placeholder="Paste output here..."
-                  ></textarea>
-                </li>
-                <li>
-                  <strong>Step 4:</strong> You're done!
-                  <br />
-                  <br />
-                  <button
-                    type="submit"
-                    data-target="modal-example"
-                    onclick="toggleModal(event)"
-                  >
-                    Get scorecard
-                  </button>
-                </li>
-              </ul>
-            </form>
-          </article>
-        </details>
-
-        <details>
-          <summary>Generate using response sheet PDF</summary>
-          <article>
-            <p>
-              <strong>Note: </strong>
-              <br />
-              <br />
-              This method might have more bugs.
-              <br />
-              PDF parsing is <em>not fun</em>.
-            </p>
-            <form id="pdf-form">
-              <ul>
-                <li>
-                  <strong>Step 1:</strong> Select your shift
-                  <select id="shift" name="shift" required>
-                    <optgroup label="Session 1">
-                      <option value="27s1">
-                        27 Jan 2024 Shift 1 (thx u/Different-Cycle9710)
-                      </option>
-                      <option value="27s2">
-                        27 Jan 2024 Shift 2 (by yours truly)
-                      </option>
-
-                      <option value="29s1">
-                        29 Jan 2024 Shift 1 (thx u/Aditya_Noob99)
-                      </option>
-
-                      <option value="29s2">
-                        29 Jan 2024 Shift 2 (thx u/Get_mortdogged)
-                      </option>
-
-                      <option value="30s1">
-                        30 Jan 2024 Shift 1
-                        <em>(thx u/IamStonedRick)</em>
-                      </option>
-
-                      <option value="30s2">
-                        30 Jan 2024 Shift 2
-                        <em>(thx u/mimusops)</em>
-                      </option>
-
-                      <option value="31s2">
-                        31 Jan 2024 Shift 2
-                        <em>(thx u/Devansh9201)</em>
-                      </option>
-
-                      <option value="01s2">
-                        01 Feb 2024 Shift 2 (thx u/lol12145)
-                      </option>
-                    </optgroup>
-                    <optgroup label="Session 2 (NTA's official keys)">
-                      <option value="04s1">04 April 2024 Shift 1</option>
-                      <option value="04s2">04 April 2024 Shift 2</option>
-                      <option value="05s1">05 April 2024 Shift 1</option>
-                      <option value="05s2">05 April 2024 Shift 2</option>
-                      <option value="06s1">06 April 2024 Shift 1</option>
-                      <option value="06s2">06 April 2024 Shift 2</option>
-                      <option value="08s1">08 April 2024 Shift 1</option>
-                      <option value="08s2">08 April 2024 Shift 2</option>
-                      <option value="09s1">09 April 2024 Shift 1</option>
-                      <option value="09s2">09 April 2024 Shift 2</option>
-                    </optgroup>
-                  </select>
-                </li>
-                <li>
-                  <label for="file-selector">
-                    <strong>Step 2:</strong> Select response sheet PDF
-                    <input type="file" id="pdfFileInput" accept=".pdf" />
-                  </label>
-                </li>
-                <li>
-                  <strong>Step 3:</strong> You're done! <br />
-                  <br />
-                  <button
-                    type="submit"
-                    data-target="modal-example"
-                    onclick="toggleModal(event)"
-                  >
-                    Generate Scorecard
-                  </button>
-                </li>
-              </ul>
-            </form>
-          </article>
-        </details>
-      </div>
-      <br /><br />
-      <div class="disclaimer">
-        <h2>Disclaimer</h2>
-        <p>
-          This program and the answer key json files may contain bugs, so don't
-          take these scores
-          <em>too</em> seriously. Wait for NTA's result!
-        </p>
-        <p>
-          Also, note that the answer keys are based on the ones NTA released on
-          6 Feb 2024 (for Session 1) and 23 Apr 2024 (for Session 2).
-        </p>
-
-        <p>They almost certainly will contain mistakes (because NTA :-/ )</p>
-      </div>
-
-      <!-- Modal -->
-      <dialog id="modal-example">
-        <article>
-          <a
-            href="#close"
-            aria-label="Close"
-            class="close"
-            data-target="modal-example"
-            onClick="toggleModal(event)"
-          >
-          </a>
-          <h3>Your JEE score</h3>
-          <div id="result">
-            <p class="shift">Shift: <span></span></p>
-            <p class="score">Your score: <span></span></p>
-            <h4>Question stats:</h4>
-
-            <table id="stats">
-              <thead>
-                <tr>
-                  <td></td>
-                  <td>Overall</td>
-                  <td>Maths</td>
-                  <td>Physics</td>
-                  <td>Chemistry</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Attempted</td>
-                  <td class="attempted"></td>
-                  <td class="attempted-maths"></td>
-                  <td class="attempted-phy"></td>
-                  <td class="attempted-chem"></td>
-                </tr>
-                <tr>
-                  <td>Correct</td>
-                  <td class="correct"></td>
-                  <td class="correct-maths"></td>
-                  <td class="correct-phy"></td>
-                  <td class="correct-chem"></td>
-                </tr>
-                <tr>
-                  <td>Incorrect</td>
-                  <td class="incorrect"></td>
-                  <td class="incorrect-maths"></td>
-                  <td class="incorrect-phy"></td>
-                  <td class="incorrect-chem"></td>
-                </tr>
-                <tr>
-                  <td>Dropped</td>
-                  <td class="dropped">N/A</td>
-                </tr>
-                <tr>
-                  <td>Score</td>
-                  <td class="score"></td>
-                  <td class="score-maths"></td>
-                  <td class="score-phy"></td>
-                  <td class="score-chem"></td>
-                </tr>
-              </tbody>
-            </table>
-            <h4>Incorrect Questions</h4>
-            <table id="incorrectQns">
-              <tbody>
-                <tr>
-                  <th>Question ID</th>
-                  <th>Your Answer</th>
-                  <th>NTA Answer</th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <footer>
-            <a
-              href="#confirm"
-              role="button"
-              data-target="modal-example"
-              onClick="toggleModal(event)"
-            >
-              Done
-            </a>
-          </footer>
-        </article>
-      </dialog>
-    </main>
-    <footer style="text-align: center">
-      Made by Samarth Sehrawat 
-    </footer>
-  </body>
+    <section id="results" hidden>
+      <h2>Results</h2>
+      <p>Shift: <span id="result-shift"></span></p>
+      <p>Total Score: <span id="result-score"></span></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Attempted</th>
+            <th>Correct</th>
+            <th>Incorrect</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="result-details"></tbody>
+      </table>
+    </section>
+  </main>
+</body>
 </html>
