@@ -3,7 +3,7 @@ document.getElementById('calculateBtn').addEventListener('click', function() {
     const responseSheetURL = document.getElementById('responseSheet').value;
 
     if (shift && responseSheetURL) {
-        fetch(`answer-keys/${shift}.json`)
+        fetch(`keys/${shift}.json`)
             .then(response => response.json())
             .then(answerKey => {
                 // Assuming we have logic to extract answers from response sheet URL here
