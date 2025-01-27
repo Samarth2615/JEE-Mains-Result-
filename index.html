@@ -1,50 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>JEE Marks Calculator</title>
-  <script defer src="app.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE Mains Score Calculator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <h1>JEE Mains Marks Calculator</h1>
-    <p>Upload your response sheet (HTML or PDF) and select the appropriate shift to calculate your score.</p>
-    
-    <section>
-      <form id="upload-form">
+
+    <div class="container">
+        <h1>JEE Mains Score Calculator</h1>
+
+        <!-- Shift Selection -->
         <label for="shift">Select Shift:</label>
-        <select id="shift" name="shift" required>
-          <option value="shift1">Shift 1</option>
-          <option value="shift2">Shift 2</option>
-          <!-- Add more shifts as needed -->
+        <select id="shift">
+            <option value="22s1">22s1</option>
+            <option value="22s2">22s2</option>
+            <option value="23s1">23s1</option>
+            <option value="23s2">23s2</option>
+            <option value="24s1">24s1</option>
+            <option value="24s2">24s2</option>
+            <option value="28s1">28s1</option>
+            <option value="28s2">28s2</option>
+            <option value="29s1">29s1</option>
+            <option value="29s2">29s2</option>
         </select>
 
-        <label for="responseFile">Upload Response Sheet:</label>
-        <input type="file" id="responseFile" accept=".html,.pdf" required>
-        
-        <button type="submit">Calculate Score</button>
-      </form>
-    </section>
+        <!-- Response Sheet URL -->
+        <label for="responseSheet">Enter Response Sheet Link:</label>
+        <input type="url" id="responseSheet" placeholder="Paste response sheet URL here">
 
-    <section id="results" hidden>
-      <h2>Results</h2>
-      <p>Shift: <span id="result-shift"></span></p>
-      <p>Total Score: <span id="result-score"></span></p>
-      <table>
-        <thead>
-          <tr>
-            <th>Subject</th>
-            <th>Attempted</th>
-            <th>Correct</th>
-            <th>Incorrect</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody id="result-details"></tbody>
-      </table>
-    </section>
-  </main>
+        <!-- Calculate Button -->
+        <button id="calculateBtn">Calculate Score</button>
+
+        <!-- Result Display -->
+        <div id="result">
+            <h3>Result</h3>
+            <p>Total Score: <span id="totalScore">0</span></p>
+            <p>Physics: <span id="physicsScore">0</span></p>
+            <p>Chemistry: <span id="chemistryScore">0</span></p>
+            <p>Mathematics: <span id="mathScore">0</span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
